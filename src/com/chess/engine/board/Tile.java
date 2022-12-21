@@ -2,6 +2,7 @@ package com.chess.engine.board;
 
 import com.chess.engine.pieces.Piece;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,8 +17,10 @@ public abstract class Tile {
         for (int i = 0; i < 64; i++){
             emptyTileMap.put(i, new EmptyTile(i));
         }
+        /** to make that class immutable I chose to use the collection  **/
+        return Collections.unmodifiableMap(emptyTileMap);
         //return ImmutableMap.copyOf(emptyTileMap);
-        return emptyTileMap;
+        //return emptyTileMap;
     }
 
     public Tile createTile(final int tile_coordinate , final Piece piece){
