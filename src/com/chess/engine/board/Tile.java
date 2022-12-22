@@ -7,12 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Tile {
-/** Tile Chess, the board isn't used and the pieces are represented by tiles  **/
+/** Tile Chess, the board isn't used and the pieces are represented by tiles
+ * for french peaple you can see Tile like "emplacement" **/
+// the coordinate of the tile the table
     protected final int tile_coordinate;
     public static final Map<Integer, EmptyTile> EMPTY_TILES = createAllPossibleEmptyTiles();
 
     private static Map<Integer, EmptyTile> createAllPossibleEmptyTiles() {
-
+        /** this function can't be modified any ways**/
         final Map<Integer, EmptyTile> emptyTileMap = new HashMap<>();
         for (int i = 0; i < 64; i++){
             emptyTileMap.put(i, new EmptyTile(i));
@@ -30,9 +32,11 @@ public abstract class Tile {
     Tile(final int tile_coordinate){
         this.tile_coordinate =tile_coordinate;
     }
+
     public abstract boolean isTileOccupied();
 
     public abstract Piece getPiece();
+
     public static final class EmptyTile extends  Tile {
         EmptyTile(int coordinate){
             super(coordinate);
@@ -49,8 +53,8 @@ public abstract class Tile {
     }
 
     public static final class OccupiedTile extends Tile {
-
         private  final Piece piece_on_tile;
+
         OccupiedTile(int tile_coordinate, Piece piece_on_tile){
             super(tile_coordinate);
             this.piece_on_tile = piece_on_tile;
@@ -66,5 +70,4 @@ public abstract class Tile {
             return this.piece_on_tile;
         }
     }
-
 }
