@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import static com.chess.engine.board.Move.*;
+
 
 public class Knight extends Piece{
 
@@ -20,10 +22,10 @@ public class Knight extends Piece{
     }
 
     @Override
-    public Collection<Move> calculateLegalMoves(Board board) {
+    public Collection<Move> calculateLegalMoves(final Board board) {
         Collection<Move> legal_moves = new ArrayList<>();
         for(final int current_candidate_offset : CANDIDATE_MOVE_COORDINATES){
-            int candidate_destination_coordinate = this.piece_position + current_candidate_offset;
+            final int candidate_destination_coordinate = this.piece_position + current_candidate_offset;
             if(BoardUtils.isValidTileCoordiante(candidate_destination_coordinate) ){
                 if(isFirstColumnExclusion(this.piece_position, current_candidate_offset) ||
                     isSecondColumnExclusion(this.piece_position, current_candidate_offset)||
@@ -34,20 +36,20 @@ public class Knight extends Piece{
 
                 final Tile candidate_destination_tile = board.getTile(candidate_destination_coordinate);
                 if(!candidate_destination_tile.isTileOccupied()){
-                    legal_moves.add( new Move() );
+                    legal_moves.add( new MajorMove(board, this, candidate_destination_coordinate) );
                 }
                 else{
                     final Piece piece_at_destination = candidate_destination_tile.getPiece();
                     final Alliance piece_alliance = piece_at_destination.getPieceAlliance();
                     if (this.piece_alliance != piece_alliance){
                         /* that means it is an enemy piece */
-                        legal_moves.add(new Move());
+                        legal_moves.add(new AttackMove(board, this, candidate_destination_coordinate,
+                                piece_at_destination));
                     }
-
                 }
             }
         }
-        return Collections.unmodifiableCollection(legal_moves);
+            return Collections.unmodifiableCollection(legal_moves);
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset){

@@ -16,7 +16,7 @@ public abstract class Tile {
     private static Map<Integer, EmptyTile> createAllPossibleEmptyTiles() {
         /** this function can't be modified any ways**/
         final Map<Integer, EmptyTile> emptyTileMap = new HashMap<>();
-        for (int i = 0; i < 64; i++){
+        for (int i = 0; i < BoardUtils.NUM_TILES; i++){
             emptyTileMap.put(i, new EmptyTile(i));
         }
         /** to make that class immutable I chose to use the collection  **/
@@ -38,7 +38,7 @@ public abstract class Tile {
     public abstract Piece getPiece();
 
     public static final class EmptyTile extends  Tile {
-        EmptyTile(int coordinate){
+        EmptyTile(final int coordinate){
             super(coordinate);
         }
         @Override
@@ -53,9 +53,9 @@ public abstract class Tile {
     }
 
     public static final class OccupiedTile extends Tile {
-        private  final Piece piece_on_tile;
+        private final Piece piece_on_tile;
 
-        OccupiedTile(int tile_coordinate, Piece piece_on_tile){
+        OccupiedTile(int tile_coordinate, final Piece piece_on_tile){
             super(tile_coordinate);
             this.piece_on_tile = piece_on_tile;
         }
